@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--  데이터 베이스 연결 정보를 만들기 : 정보를 갖고 있는곳 mybasicdatasource => -->
+	<bean id="ds" class="com.sist.spring.MyBasicDataSource"
+	p:driverClassName="oracle.jdbc.driver.OracleDriver"
+	p:url="jdbc:oracle:thin:@localhost:XE:1521"
+	p:userName="hr"
+	p:password="happy"
+	/>
+	
+	<!-- EmpDAO에 mybasicdatasource 를 전송!: 생성자에 값을 넣어주면서! 
+	<bean id="dao" class="com.sist.spring.EmpDAO"/> => default생상자일 경우이다. but =>empdao에는 ds를 넣어야하는 매개변수 생성자이다.
+	c:ds-ref="ds" =>위 id값!
+	c: => setmethod의 생성장 값을 넣을때.
+	-->
+	<!-- 가장 많이 쓰이는 매개변수 생성자 값 넣기 : 클로사용하기1!-->
+	<bean id="dao" class="com.sist.spring.EmpDAO"
+	c:ds-ref="ds"
+	/>
+	
+	<!-- EmpDAO() -->
+	<!-- OLD VERSION 매개변수 생성자 값 넣기 -->
+	<!-- 
+	<bean id="dao" class="com.sist.spring.EmpDAO">
+		<constructor-arg index="0" ref="ds"/>
+	</bean>
+	 -->
+	
+</beans>

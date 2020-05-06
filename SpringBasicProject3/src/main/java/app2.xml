@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!--  
+		
+		vo를 제외하고 모두 xml에등록하기!!
+	
+		sqlsessionfactory ssf
+			=>데이터베이스 정보를 넘김 basicdatasource에서 정보를 갖고있음!
+		이미 존재하는 라이브러리 클래스!
+	-->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+	/>
+	
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	
+	<!-- 인터페이스만 넘기면 구현해줄것. -->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf"
+		p:mapperInterface="com.sist.spring2.EmpMapper"
+	/>
+	<!-- 사용자정의 => annotation 사용가능 -->
+	<bean id="dao" class="com.sist.spring2.EmpDAO"
+		p:mapper-ref="mapper"
+	/>
+	
+	
+</beans>
