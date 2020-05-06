@@ -1,0 +1,25 @@
+package com.sist.spring3;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		String[] data={"sawon.xml","member.xml"};
+		//xml읽는 아이
+		ApplicationContext app=new ClassPathXmlApplicationContext(data);
+		
+		Sawon sa=(Sawon)app.getBean("sa");
+		sa.display();
+		
+		Member mem=(Member)app.getBean("mem");
+		mem.display();
+	}
+
+}
+
+
