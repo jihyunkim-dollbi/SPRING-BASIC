@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- sawon 클래스에 값만 넣고 => sawoncontainer에서 list에 값을 넣을때 sawon 의 id를 넣어주고 주소값을 이용해 -->
+	<bean id="s" class="com.sist.spring.Sawon">
+		<property name="sabun">
+			<value>1</value>
+		</property>
+		<property name="name">
+			<value>홍길동</value>
+		</property>
+		<property name="age">
+			<value>30</value>
+		</property>
+		<property name="sex">
+			<value>남자</value>
+		</property>
+	</bean>
+	
+	<bean id="s1" class="com.sist.spring.Sawon">
+		<property name="sabun" value="2"/>
+		<property name="name" value="춘향이"/>
+		<property name="age" value="31"/>
+		<property name="sex" value="여자"/>	
+	</bean>
+	
+	<bean id="s2" class="com.sist.spring.Sawon"
+		p:sabun="3"
+		p:name="이순신"
+		p:age="29"
+		p:sex="남자"
+	/>
+	
+	<!-- 
+		시작하자마자 xml을 파싱하기 때문에 xml에러나면 모든 실행x
+		
+		ApplicationContext에서 아래와 같은 map형식으로 데이터 가지고있다.
+		
+		Map
+		====================
+		id명   	할당된 클래스 주소
+		=======================================================
+		s		Class.forName("com.sist.spring.SawonContainer")
+		========================================================
+		s1		Class.forName("com.sist.spring.SawonContainer")
+		=========================================================
+		s2		Class.forName("com.sist.spring.SawonContainer")
+		=========================================================	
+		
+		getBean()
+		
+		private map map=new hashmap();
+		public applicatoncontext()
+		{
+			map.put("a", class.forname("A"));
+			map.put("b", class.forname("B"));
+			map.put("c", class.forname("C"));
+			map.put("d", class.forname("D"));
+		}
+		
+		public Object getBean(String id)
+		{
+			return map.get(id); 리턴형이  Object!!
+		}
+		
+		A a =(A)app.getBean("a"); ==> id에 등록을해야 사용가능하다!!
+
+	 -->
+	<!-- list에 값을 채울때 => 이 주소를 참조해서 넣어=> ref!  -->
+	<bean id="sc" class="com.sist.spring.SawonContainer">
+		<property name="list">
+			<list>
+				<ref bean="s"/><!-- list.add(s) -->
+				<ref bean="s1"/><!-- 객체 주소에 값을 넣을때는 => ref="bean 태그의 id명" -->
+				<ref bean="s2"/>
+			</list>
+		</property>
+	</bean>
+</beans>
