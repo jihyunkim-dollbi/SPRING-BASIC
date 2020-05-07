@@ -16,7 +16,27 @@ import org.springframework.stereotype.Component;
 //일반 클래스 할당
 @Component("ds")
 public class MyBasicDataSource extends BasicDataSource{
+
+	/*<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+		p:maxActive="20"
+		p:maxIdle="10"
+		p:maxWait="-1"
+	 */
 	
-	
+	public MyBasicDataSource()
+	{
+		setDriverClassName("oracle.jdbc.driver.OracleDriver");
+		setUrl("jdbc:oracle:thin:@localhost:1521:XE");
+		setUsername("hr");
+		setPassword("happy");
+		setMaxActive(20);
+		setMaxIdle(10);
+		setMaxWait(-1);
+		
+	}
 	
 }
