@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!--  AOP 설정 먼저! -->
+	<!-- 1. DataBase 정보 전송! -->
+	<!--  트랜젝션 처리 -->
+	<!-- 2. SqlSessinFactory 생성 -->
+	<!-- 3. SqlSessionFactory 를 DAO에 전송! -->
+	<!-- 위의 처리과정이 있어야 SQLSESSION SSF 를 만들기 위함! -->
+	<!-- public class BasicDataSource
+		{
+				private String driverClassName;
+				public void setDriverClassName(String driverClassName)
+				{
+					this.driverClassName=driverClassName;
+				}
+			}
+	 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+		p:maxActive="20"
+		p:maxIdle="10"
+		p:maxWait="-1"
+	/>
+	
+	<!--  트랜젝션 처리 -->
+	<!-- 2. SqlSessinFactory 생성 -->
+	<!--  클래스를 요청했기때문에 ds의 주소값 ref로 .. 
+		classpath => default path => src/main/java
+	
+	-->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+		p:configLocation="classpath:Config.xml"
+		
+	/>
+	
+	<!-- 클래스 간에 관계도를 나타내는 DI => for INJECTION이 필요함. -->
+	<!-- 3. SqlSessionFactory 를 DAO에 전송! -->
+	<bean id="dao" class="com.sist.dao.EmpDAO"
+		p:sqlSessionFactory-ref="ssf"
+	/>
+	
+	
+</beans>
