@@ -25,6 +25,7 @@ public class MyBasicDataSource extends BasicDataSource{
 		p:maxActive="20"
 		p:maxIdle="10"
 		p:maxWait="-1"
+		made by spring
 	 */
 	
 	public MyBasicDataSource()

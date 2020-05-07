@@ -5,8 +5,7 @@ package com.sist.spring;
  *	
  * 스프링이 관리하는 클래스가 아니다.
  * vo => 일반 테이터형! 사용자정의 데이터형! => 따라서, 등록x
- * bean class(not vo) => 기능을 가진 class =>ex ) dao.. etc
- * 
+ * bean class(not vo) => 기능을 가진 class => ex ) dao.. etc
  * 
  * 스프링에서의 등록이란
  * 1) XML
@@ -15,11 +14,27 @@ package com.sist.spring;
  * 	  ==============
  * 		=> ANNOTATION : 사용자 정의 클래스에 사용가능!
  * 		=> XML : 라이브러리 등록시 사용(MYBATIS, JDBC => 이미 만들어져있는 클래스 ANNOTATION 사용X)
- *   ex) sqlsessionfactory => 기존의 라이브러리에는 annotation사용 불가능.. 
- * 
- */
+ *   ex) sqlsessionfactory => 기존의 라이브러리에는 annotation사용 불가능..so by xml 
 
-//do 연동하기
+
+@메모리할당
+@repository 
+dao/data
+
+@service
+dao+manager
+
+@component
+일반 클래스
+
+@controller
+모델 클래스        
+    
+@aspect 
+공통기반    
+    
+ */
+//dao 연동하기
 import java.util.*;
 public class EmpVO {
 	
@@ -31,7 +46,6 @@ public class EmpVO {
 	private int comm;
 	private int sal;
 	private int deptno;
-	
 	
 	public int getEmpno() {
 		return empno;
@@ -81,7 +95,5 @@ public class EmpVO {
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
 	}
-	
-	
 	
 }

@@ -9,7 +9,6 @@ import lombok.Setter;
 public class EmpVO {
 
 	private int empno;
-	
 	private String ename;
 	private String job;
 	private int mgr;

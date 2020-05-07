@@ -9,10 +9,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	<!--  AOP 설정 먼저! -->
 	<!-- 1. DataBase 정보 전송! -->
-	<!--  트랜젝션 처리 -->
-	<!-- 2. SqlSessinFactory 생성 -->
-	<!-- 3. SqlSessionFactory 를 DAO에 전송! -->
-	<!-- 위의 처리과정이 있어야 SQLSESSION SSF 를 만들기 위함! -->
+	
+	<!-- 아래 처리 과정이 있어야 SQLSESSION SSF 를 만들기 위함! -->
 	<!-- public class BasicDataSource
 		{
 				private String driverClassName;
@@ -22,6 +20,7 @@
 				}
 			}
 	 -->
+	 
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
 		p:url="jdbc:oracle:thin:@localhost:1521:XE"

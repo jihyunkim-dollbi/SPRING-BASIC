@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!--어노테이션 이용시 등록은 package로 끝!
-		annotation있는 클래스만 메모리할당! 
-	 -->
-	<context:component-scan base-package="com.sist.temp"/>
+		annotation있는 클래스만 메모리할당! 	 -->
+	<context:component-scan base-package="com.sist.dao"/>
+	<context:component-scan base-package="com.sist.spring"/>
 </beans>
