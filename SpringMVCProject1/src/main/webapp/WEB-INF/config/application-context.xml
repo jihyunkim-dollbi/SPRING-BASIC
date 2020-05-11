@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!-- 사용자 정의 클래스 등록-for 메모리할당! -->
+	<context:component-scan base-package="com.sist.*"/>
+	
+	<!--JSP를 관리해주는 클래스 등록: ViewResolver => jsp를 찾아서 넘겨줌! -->
+	<!-- 
+				      request					request에 정보 추가
+		MVC구조 => *.do ==> DispatcherServlet => Model ==> 모델에서 @requestMapping("a.do")을 찾는다!
+			  => again DispatcherServlet로 와서 request 전달 => 
+		
+		**mvc구조에서 추가된 절차!
+		==> ViewResolver를 이용해서 JSP찾고(VR에 jsp의 경로명을 설정해줘야한다....) request를 전송!	
+		
+		and then jsp로 request전달!
+	 -->
+	 <!-- 클래스를 찾는 아이 / 파일명만 넘긴다. 확장자명x / 폴더가 많으면  "/"만 붙임!
+	 	기준 경로는 webapp
+	 
+	 -->
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		  p:prefix="/main/"
+		  p:suffix=".jsp"
+	 />
+	 
+		  
+</beans>
