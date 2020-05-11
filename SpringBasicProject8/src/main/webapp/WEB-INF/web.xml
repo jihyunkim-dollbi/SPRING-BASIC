@@ -27,7 +27,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-
+	<!--  <url-pattern>/*</url-pattern> 에서 /* 를 다시 작성해야한다. 그대로 복사해서 붙이면 안된다-->
 </web-app>
