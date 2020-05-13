@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- controller(사용자정의)=> 메모리할당 -->
+	<!-- AOP 공통 모듈 -->
+	<context:component-scan base-package="com.sist.*"/>
+	
+	
+	<!-- 한글 변환 => MVC =>JSON넘기기 위해 -->
+	
+	<!--  
+		  <메모리할당 annotation>
+		  @Component, = 메인클래스, 일반클래스 
+		  @Repository,  = DB연동, DAO
+		  @Service,   = 모델클래스
+		  @Controller,   = FORWARD, REDIRECT(request필요x) 사용시 => 파일명 전송!
+		  @RestController,  = 스크립트, JSON 전송!! 
+		  @ControllerAdvice,    
+		  ===================
+		  <DI 자동주입 annotation>
+ 		  @Required, 
+ 		  @Autowired, 
+ 		  @PostConstruct, 
+ 		  @PreDestroy, 
+ 		  @Resource 
+ 		  
+ 		  / 줄경우 모든 경로를 모두 명시해줘야한다.
+ 		  
+ 		  -->
+ 		  
+ 		  <bean id="viewResolver"
+ 		  		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+ 		  		p:prefix="/"
+		 		p:suffix=".jsp"
+ 		  		/>
+
+</beans>
