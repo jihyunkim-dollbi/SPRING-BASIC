@@ -7,15 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.dao.*;
+import com.sist.manager.Rmanager;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.net.URLEncoder;
 import java.util.*;
-
 import javax.servlet.http.HttpServletResponse;
+
+//restcontoller에서는 스크립트를 그대로 보내면안되고
+//ajax로 주고 받아야한다.
 
 @Controller
 @RequestMapping("board/")
@@ -23,6 +27,10 @@ public class DataBoardController {
 	
 	@Autowired // @resource는 해당 id를 직접 찾고 autowired는 자동으로 찾아서 주소값을 주입해줌!
 	private DataBoardDAO dao;
+	
+	@Autowired
+	private Rmanager rm;
+	
 	
 	@RequestMapping("list.do")
 	public String board_list(Model model, String page)
@@ -64,7 +72,7 @@ public class DataBoardController {
 	
 	
 	@RequestMapping("insert_ok.do")
-	public String board_insert_ok(DataBoardVO vo) throws Exception //사용자로부터 받는 값을 자동으로 vo에 채워줄것임
+	public String board_insert_ok(DataBoardVO vo) throws Exception //사용자로부터 받는 값을 자동으로 vo에 채워줄것임 ==> command객체 , 커맨드 객체
 	{
 		List<MultipartFile> list=vo.getFiles(); //list에 저장됐고 파일에 저장된 상태x
 		
@@ -140,8 +148,19 @@ public class DataBoardController {
 			model.addAttribute("fList",fList);
 			model.addAttribute("sList",sList);
 		}
-		
 		model.addAttribute("vo", vo);
+		
+		//그래프 출력
+		try{
+			
+			FileWriter fw=new FileWriter("c:\\data\\board.txt");
+			fw.write(vo.getContent()+"\r\n"); // 내용이 들어감
+			fw.close();
+			
+			//저장됐으니 내용을 rm으로 보내라
+			rm.rGraph(no);
+			
+		}catch(Exception ex){}
 		
 		return "board/detail";
 	}
@@ -180,4 +199,33 @@ public class DataBoardController {
 			
 		}catch(Exception ex) {}
 	}
+	
+	
+	@RequestMapping("update.do")
+	public String board_update(Model model, int no)
+	{
+	
+		DataBoardVO vo=dao.databoardUpdateData(no);
+		model.addAttribute("vo", vo);
+		
+		return "board/update";
+	}
+	/*
+	 * 1. jsp =>  => @controller => @requestmapping => link => .do => 처리DAO => 결과값 전송(model)request => 출력jsp
+	 * 
+	 */
+	
+	//<a href="delete.do?no=${vo.no }"  from detail.jsp
+	//<input type=hidden name=pwd value="${no }" id="no" > from delete.jsp 로 no를 보낼 예정
+	@RequestMapping("delete.do")
+	public String databoard_delete(Model model, int no)
+	{
+		model.addAttribute("no",no);
+		
+		return "board.delete";
+	}
+	
+	
+	
+	
 }

@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sist</groupId>
-	<artifactId>myapp3</artifactId>
-	<name>SpringMVCProject4</name>
+	<artifactId>news</artifactId>
+	<name>SpringMVCProject6</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-	<properties>
+		<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.2.5.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
@@ -29,6 +29,17 @@
     	<artifactId>json-simple</artifactId>
     	<version>1.1.1</version>
 	</dependency>
+	
+	
+	<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+	<dependency>
+    	<groupId>javax.xml.bind</groupId>
+    	<artifactId>jaxb-api</artifactId>
+    	<version>2.3.1</version>
+	</dependency>
+	
+	
+	
 	
 	
 	<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -91,7 +102,8 @@
          <artifactId>spring-aspects</artifactId>
          <version>5.2.5.RELEASE</version>
       </dependency>
-<!--    		<dependency>
+      
+<!--  <dependency>
           <groupId>ojdbc</groupId>
           <artifactId>ojdbc</artifactId>
           <version>14</version>
@@ -183,6 +195,8 @@
          <artifactId>mongo-java-driver</artifactId>
          <version>2.13.0-rc1</version>
       </dependency> -->
+      
+      <!-- 몽고-자바 드라이버 -->
       <dependency>
 	    <groupId>org.mongodb</groupId>
 	    <artifactId>mongo-java-driver</artifactId>
@@ -236,6 +250,8 @@
          <artifactId>commons-dbcp</artifactId>
          <version>1.4</version>
       </dependency>
+      
+      <!-- 파일업로드 -->
       <dependency>
          <groupId>commons-fileupload</groupId>
          <artifactId>commons-fileupload</artifactId>
@@ -285,6 +301,7 @@
 			<artifactId>twitter4j-stream</artifactId>
 			<version>4.0.2</version>
 		</dependency>
+		<!-- 비번틀림, 오류메시지 알려줌 -->
         <dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -303,6 +320,7 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
+		
 		<!-- tiles  -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -460,4 +478,3 @@
         </plugins>
     </build>
 </project>
-	

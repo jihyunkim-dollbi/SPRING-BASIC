@@ -1,5 +1,6 @@
 package com.sist.dao;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
@@ -35,6 +36,30 @@ public interface DataBoardMapper {
 			+"WHERE no=#{no}")
 	public DataBoardVO databoardDetailData(int no);
 	
+
+	//UPDATE_OK
+	//PWD 가져오기
+	@Select("SELECT pwd from spring_databoard "
+			+"WHERE no=#{no}")
+	public String databoardGetPassword(int no);
+	
+	//수정하기
+	@Update("UPDATE spring_databoard set "
+			+"name=#{name}, content=#{content}, subject=#{subject} "
+			+"WHERE no=#{no}")
+	public void databoardUpdate(DataBoardVO vo); //#이 많을때 map or vo, 한개면 vo
+	
+	
+	//이 게시물이 삭제 되기전에 게시물안에 파일들을 삭제할 것임!
+	//파일이 없는 게시물의 경우 count가 0이 아니면 지울필요x , 0이상일때만 지울것!!
+	@Select("SELECT filename, filecount FROM spring_databoard "
+			+"WHERE no=#{no}")
+	public DataBoardVO databoardFileInfoData(int no); 
+	
+	//비번체크는 재사용 예정!!
+	@Delete("DELETE FROM spring_databoard "
+			+"WHERE no=#{no}")
+	public void databoardDelete(int no); // parameter type은 한개만 가능!!
 	
 	
 }

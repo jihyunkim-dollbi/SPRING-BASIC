@@ -67,7 +67,11 @@ h1 {
              	<a href="list.do" class="btn btn-xs btn-success">목록</a>
             </td>
           </tr>
-         
+          <tr>
+          	<td colspan="4">
+          		<img src="${vo.no }.png">	
+          	</td>
+          </tr>
         </table>
       </div>
     </div>

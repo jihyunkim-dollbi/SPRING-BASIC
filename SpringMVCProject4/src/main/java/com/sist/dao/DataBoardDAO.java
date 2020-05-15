@@ -1,10 +1,10 @@
 package com.sist.dao;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import java.util.*;
+
 @Repository
 public class DataBoardDAO {
 
@@ -40,5 +40,45 @@ public class DataBoardDAO {
 	{
 		return mapper.databoardTotalPage();
 	}
+	
+	//detail처리
+	public DataBoardVO databoardUpdateData(int no)
+	{
+		//조회수 올리고
+		mapper.hitIncrement(no);
+			
+		//상세보기
+		return mapper.databoardDetailData(no);
+	}
+	
+	public String databoardGetPassword(int no){
+		
+		return mapper.databoardGetPassword(no);
+	}
+		
+	public void databoardUpdate(DataBoardVO vo)
+	{	
+		mapper.databoardUpdate(vo);	
+	}
+	
+	//데이터처리는 controller and dao possible!!
+	public boolean databoardDelete(int no, String pwd)
+	{	
+		boolean bCheck=false; // 안맞으면 false!
+		String db_pwd=mapper.databoardGetPassword(no); //비번 가져옴!
+		if(db_pwd.equals(pwd))
+		{
+			mapper.databoardDelete(no);
+			bCheck=true;
+		}
+		return bCheck;
+	}
+	
+	
+	public DataBoardVO databoardFileInfoData(int no)
+	{	
+		return mapper.databoardFileInfoData(no);
+	}
+	
 	
 }

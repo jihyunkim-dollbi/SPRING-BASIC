@@ -17,7 +17,9 @@
 </head>
 <body>
 	<%= application.getRealPath("/board") %>
-	<!-- C:\springDev\springStudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringMVCProject4\board -->
+	<!-- 
+		그림은 realPath에서 저장해야함!!
+	C:\springDev\springStudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringMVCProject4\board -->
 	<div class="container">
 		<h1 class="text-center">자료실</h1>
 		<div class="row">
