@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ <tiles-definitions>
+ <!-- 
+ 	tiles DTD 올리고 사용하기 => Copied from https://offbyone.tistory.com/9 
+ 
+ 	**WEB-INF => 외부노출X => 파일 실행이 안된다. => 프로젝트 우클릭 => RUN ON SERVER
+	**pom.xml 수정시 => 파일 => maven => update!
+ 
+ 	public String main_main(model model)
+ 	
+ 	return "main"; => definition => 리턴형 설정!
+ 	main을 주면 /WEB-INF/main/main.jsp 이 파일을 실행해
+ 	main에는 인클루드 되는 파이를이 있다 => put-attribute
+  -->
+  
+ 	<definition name="main" template="/WEB-INF/main/main.jsp">
+ 		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/><!-- 헤더라는 이름이 들어오면  /WEB-INF/main/header.jsp를 실행해-->
+ 		<put-attribute name="menu" value="/WEB-INF/main/menu.jsp"/>
+ 		<put-attribute name="content" value="/WEB-INF/main/content.jsp"/>
+ 		<put-attribute name="footer" value="/WEB-INF/main/footer.jsp"/>
+ 	</definition>
+ 
+ 	<!-- 한개의 템플릿에 사용의 예를 알아보았고,
+ 		 바탕이 되는 템플릿이 여러개 될 경우가 있다 => 새 탭이 나오는 경우?
+ 		 ==> 화면이 완전히 바뀌는 경우 => <definition name="main" template="/WEB-INF/main/main.jsp"> 다시 재정의 
+ 		  
+ 		 <definition name="store*/*" extends="main">
+ 	 -->
+ 
+ 
+ 	<!-- 
+ 		//home 부분은 계속 바뀐다.. ==> content부분!
+ 		public String board_list(Model model)
+ 		{
+ 			return "board/list";
+ 		}
+ 		첫번째 * => 1번이 경로/폴더명
+ 		두번째 * => 2번이 파일명
+ 	 -->
+ 	  <definition name="*/*" extends="main"> <!-- board/list일때 어떻게? extends="main" 메인을 상속해서 그 구조를 그대로 사용 => 해당 파일만 바꿔라 명령 -->
+ 	 	<put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp"/><!-- content자리에 list.jsp파일로 변경 -->
+ 	 </definition>
+ 	 
+ 	 <definition name="*/*/*" extends="main">
+ 	 	<put-attribute name="content" value="/WEB-INF/{1}/{2}/{3}.JSP"/>
+ 	 </definition>
+ 	 
+ 	 
+ 	<!-- <definition name="notice/list" extends="main">
+ 	 	<put-attribute name="content" value="/WEB-INF/notice/list.jsp"/>
+ 	 </definition> -->
+ </tiles-definitions>

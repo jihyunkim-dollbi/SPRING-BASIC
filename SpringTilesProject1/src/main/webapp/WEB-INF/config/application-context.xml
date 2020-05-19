@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- TilesView xml을 넘겨주고 화면을 자동으로 include한다 better than using viewResolver 
+	          화면깜빡임x
+	-->
+	
+	<context:component-scan base-package="com.sist.*" />
+	
+	<!-- xml definetion 설정하고 => 가장 먼저 넘겨줘야한다. 그래서 configuration됨 -->
+	<bean id="tilesConfigurer"
+		  class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+		  p:definitions="/WEB-INF/tiles.xml"
+	/>
+	
+	<!-- 라이브러리 올리기 리턴을 받아서 처리한다.
+		p:viewClass="" => 리턴값을 받아서  배치해준다.
+		P:부분은 CTRL SPACE안먹힘 복붙하기
+		p:order="" 실행 순서 tiles? or viewResolver
+	-->
+	
+	<bean id="tilesViewResolver"
+		  class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		  p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"
+		  p:order="0"
+	/>
+	
+	<!-- 전제적인 것은 tiles가 찾되 restcontoller의 경우 xml,json 파일이 넘어가므로 두번째 경우의 수로 viewResolver를 환경설정해놓는다. -->
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		  p:prefix="/"
+		  p:suffix=".jsp"
+		  p:order="1"
+	/>
+	
+	
+</beans>
