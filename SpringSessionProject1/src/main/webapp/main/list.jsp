@@ -19,7 +19,15 @@
 			ex) import, 소스를 고치려면 => xml로 변경.
 				재사용! 수정-오버라이딩(modify), 추가-오버로딩(new), 삭제 가능해야!! => 다형성(상속,포함클래스!=> 재사용!) , 캡슐화!
 			-->
-	</div><!-- babel 버전! 
+	</div>
+	
+	<!-- 
+	
+	
+	JSX => ES6버전 => JAVASCRIPT+XML => \"\" 안해도되고, ; 안해되되고
+	EX8버전 =>ANNOTATION!, ARRAYLIST.. ETC..
+	
+	babel 버전! 
 	
 	단방향 통신! 한방향으로만 데이터가 송신됨! 
 	스프링 서버 => 에서 json을 넘어옴/가져옴 ==> App => props ==>  musicTable => props => musicRow
@@ -111,9 +119,8 @@
 			//서버에서 들어오는 데이터를 받아서 저장할때
 			this.state={
 				music:[],
-				ss:'',
-				
-				
+				ss:''
+
 			} 
 			//react에서 이벤트 등록할때 사용! 이벤트 네임 = onUserInput
 			this.handlerUserInput=this.handlerUserInput.bind(this);

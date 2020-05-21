@@ -17,7 +17,7 @@ public interface MusicMapper {
 	//로그인처리
 	@Select("SELECT COUNT(*) FROM member "
 			+"WHERE id=#{id}")
-	public String idCount(String id);
+	public int idCount(String id);
 	
 	//pwd체크
 	@Select("SELECT pwd FROM member "

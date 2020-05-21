@@ -19,9 +19,9 @@ HIT                NUMBER
 @Getter
 @Setter
 public class MusicVO {
-
+	// trigger for hit
+	// function is better than join in oracle
+	// tomorrow
 	private int mno, rank, idcliment, hit;
 	private String title, singer, album,state, poster, key;
-	
-	
 }

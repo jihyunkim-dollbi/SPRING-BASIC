@@ -17,7 +17,7 @@ public class MusicController {
 	@Autowired
 	private MusicDAO dao;
 	
-	@RequestMapping("main/music.do")
+	@RequestMapping("main/music.do") //spring 커맨트 객체 제공 => 데이터형 자동 변환 (no parse), vo에 값을 알아서 채워주고 읽어줌!
 	public String main_music()
 	{
 		String result="";
@@ -44,6 +44,25 @@ public class MusicController {
 		
 	}
 	
-	
+	@RequestMapping("main/detail_data.do")
+	public String detail_data(int mno)
+	{
+		
+		MusicVO vo=dao.musicDetailData(mno);
+		JSONObject obj=new JSONObject();
+		obj.put("mno", vo.getMno());
+		obj.put("title", vo.getTitle());
+		obj.put("singer", vo.getSinger());
+		obj.put("album",vo.getAlbum());
+		obj.put("state", vo.getState());
+		obj.put("poster", vo.getPoster());
+		obj.put("idcliment", vo.getIdcliment());
+		obj.put("key", vo.getKey());
+		
+		
+		return obj.toJSONString(); // 문자열로 보냄
+		
+		
+	}
 	
 }

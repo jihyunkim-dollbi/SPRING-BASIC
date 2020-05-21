@@ -28,8 +28,7 @@ public class MusicDAO {
 	
 	public List<MusicVO> musicListData()
 	{
-		return mapper.musicListData();
-		
+		return mapper.musicListData();	
 	}
 	
 	public MusicVO musicDetailData(int mno)
@@ -37,7 +36,7 @@ public class MusicDAO {
 		return mapper.musicDetailData(mno);
 	}
 	
-	public String idCount(String id)
+	public int idCount(String id)
 	{
 		return mapper.idCount(id);
 	}
