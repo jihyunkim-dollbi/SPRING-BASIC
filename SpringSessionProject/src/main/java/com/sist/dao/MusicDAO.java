@@ -4,23 +4,33 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 /*
- *   Spring¿¡¼­ ¸Ş¸ğ¸® ÇÒ´ç 
- *   = @Component : ÀÏ¹İ Å¬·¡½º (MainClass,~Manager,¿ÜºÎ¿¡¼­ µ¥ÀÌÅÍ ÀĞ¾î¿Â´Ù)
+ *   Springï¿½ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½ ï¿½Ò´ï¿½ 
+ *   = @Component : ï¿½Ï¹ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ (MainClass,~Manager,ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ¾ï¿½Â´ï¿½)
  *   = @Repository : DAO
- *   = @Controller : Model => ~Controller(Spring),~Action,~Model(»ç¿ëÀÚÁ¤ÀÇ)
+ *   = @Controller : Model => ~Controller(Spring),~Action,~Model(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
  *   = @RestController : JSON,XML => (Ajax,React)
- *   ***= @Service : DAO¸¦ ¿©·¯°³ ¿¬°áÇØ¼­ »ç¿ë => BI
+ *   ***= @Service : DAOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ => BI
  *   
- *   Spring¿¡¼­ DI
+ *   Springì—ì„œ DI
  *   = @Autowired
  *   = @Resource
  *   ***= @Inject
  *   ***= @Import
+ *   
+ *   interface A
+ *   interface B
+ *   class MapperFactoryBean implements A,B =>ì¸í„°í˜ì´ìŠ¤ëŠ” ë‹¤ì¤‘ êµ¬í˜„ì´ ê°€ëŠ¥í•˜ë‹¤.
+ *   
+ *   
  */
 @Repository
 public class MusicDAO {
    @Autowired
    private MusicMapper mapper;
+   
+   @Autowired
+   private MovieMapper movieMpper;
+   
    public List<MusicVO> musicListData()
    {
 	   return mapper.musicListData();

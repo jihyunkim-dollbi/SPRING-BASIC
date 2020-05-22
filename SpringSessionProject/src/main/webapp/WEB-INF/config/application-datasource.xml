@@ -23,9 +23,9 @@
     />
     <!-- Mapper전송  -->
     <bean id="mapper"
-       class="org.mybatis.spring.mapper.MapperFactoryBean"
+       class="org.mybatis.spring.mapper.MapperScannerConfigurer"
        p:sqlSessionFactory-ref="ssf"
-       p:mapperInterface="com.sist.dao.MusicMapper"
+       p:basePackage="com.sist.dao"
     />
     
 </beans>

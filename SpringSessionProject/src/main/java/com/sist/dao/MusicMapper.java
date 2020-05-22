@@ -1,6 +1,5 @@
 package com.sist.dao;
 import java.util.*;
-
 import org.apache.ibatis.annotations.Select;
 /*
  *    public void insert(){}
@@ -11,9 +10,9 @@ import org.apache.ibatis.annotations.Select;
  *        try
  *        {
  *            ssf.openSession()
- *            ÀÔ°í)insert(); Á¤»ó  
- *            Àç°í)update(); ¿À·ù  
- *            Àç°í)insert(); Á¤»ó  
+ *            ìž…ê³ )insert(); ì •ìƒ  
+ *            ìž¬ê³ )update(); ì˜¤ë¥˜  
+ *            ìž¬ê³ )insert(); ì •ìƒ  
  *            commit() ===> Around
  *        }catch(Exception ex)
  *        {

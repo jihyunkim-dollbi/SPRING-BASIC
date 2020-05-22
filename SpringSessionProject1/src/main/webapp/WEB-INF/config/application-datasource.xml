@@ -27,10 +27,10 @@
 	<!-- mapper에 전송 , 인터페이스 구현 함수 ==> DAO에서 @AUTOWIRED하여 구현한 값을 주소로 받음!! 
 		org.mybatis.spring.mapper.MapperFactoryBean ==> SQL 읽고 구현해줌!-->
 		<bean id="mapper"
-			  class="org.mybatis.spring.mapper.MapperFactoryBean"
-			  p:sqlSessionFactory-ref="ssf"
-			  p:mapperInterface="com.sist.dao.MusicMapper"
-		/>
+      		 class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+      		 p:sqlSessionFactory-ref="ssf"
+       		p:basePackage="com.sist.dao"
+    	/>
 		
 
 </beans>
