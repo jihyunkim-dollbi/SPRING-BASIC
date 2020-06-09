@@ -13,12 +13,13 @@ import com.sist.dao.MovieVO;
 /*
  * 	<td class="title">
 		<div class="tit5">
-		<a href="/movie/bi/mi/basic.nhn?code=181710" title="Æ÷µå V Æä¶ó¸®">Æ÷µå V Æä¶ó¸®</a>
+		<a href="/movie/bi/mi/basic.nhn?code=181710" title="í¬ë“œ V í˜ë¼ë¦¬">í¬ë“œ V í˜ë¼ë¦¬</a>
 			</div>
 	</td>
  * 
  */
 public class MovieManager {
+	
 	public List<String> movieLinkData()
 	{
 		List<String> list=new ArrayList<String>();
@@ -26,7 +27,7 @@ public class MovieManager {
 		try{
 			for(int i=1; i<=40; i++)
 			{
-				Document doc=Jsoup.connect("https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&date=20200513&page="+i).get(); //1~40ÆäÀÌÁö!
+				Document doc=Jsoup.connect("https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&date=20200513&page="+i).get(); //1~40í˜ì´ì§€!
 				Elements link=doc.select("td.title div.tit5 a"); 
 				
 				for(int j=0;j<link.size();j++)
@@ -46,58 +47,57 @@ public class MovieManager {
 	private String title, poster, genre, grade, director, actor, story; 
 	 */
 	
-	//°ªÀ» °¡Á®¿À´Â °÷ ¸ù°íµğºñ¿¡ insert·Î ³ÖÀ» ¿¹Á¤
+	//ê°’ì„ ê°€ì ¸ì˜¤ëŠ” ê³³ ëª½ê³ ë””ë¹„ì— insertë¡œ ë„£ì„ ì˜ˆì •
 	public void movieAllData(){
 		
 		try{
 			
-			//dao¿¡¼­ mongodb connection and inserting!
+			//daoì—ì„œ mongodb connection and inserting!
 			MovieDAO dao=new MovieDAO(); 
-			List<String> list=movieLinkData(); //¸®½ºÆ®¿¡ °ªÀÌ Ã¤¿öÁü
+			List<String> list=movieLinkData(); //ë¦¬ìŠ¤íŠ¸ì— ê°’ì´ ì±„ì›Œì§
 			int k=1;
-			for(String url:list) //ÇÑÁÙ¾¿ Ã³¸®
+			for(String url:list) //í•œì¤„ì”© ì²˜ë¦¬
 			{
-				try{ // 19±İÀº Ã£Áö ¸øÇÏ±â ¶§¹®¿¡! ¾È¿¡¼­ Ã£Áö ¸øÇØµµ ´Ù½Ã for¹®À¸·Î°í°í.	
+				try{ // 19ê¸ˆì€ ì°¾ì§€ ëª»í•˜ê¸° ë•Œë¬¸ì—! ì•ˆì—ì„œ ì°¾ì§€ ëª»í•´ë„ ë‹¤ì‹œ forë¬¸ìœ¼ë¡œê³ ê³ .	
 					
-				Document doc=Jsoup.connect(url).get(); //url ÇÑ°³¾¿ ÆäÀÌÁö ¾Ê¿¡ µ¥ÀÌÅÍ ÀĞ±â ½ÃÀÛ
-				//ÇÑ°³¾¿¸¸ ÀĞ°í ÇÑ°³ÀÇ vo¾¿ ¸ù°íµğºñ¿¡ ³Ö±â
+				Document doc=Jsoup.connect(url).get(); //url í•œê°œì”© í˜ì´ì§€ ì•Šì— ë°ì´í„° ì½ê¸° ì‹œì‘
+				//í•œê°œì”©ë§Œ ì½ê³  í•œê°œì˜ voì”© ëª½ê³ ë””ë¹„ì— ë„£ê¸°
 				/*
 				 * <div class="mv_info">
 		<h3 class="h_movie">
 			
-			<a href="./basic.nhn?code=171539">±×¸° ºÏ</a><!-- N=a:ifo.title -->
+			<a href="./basic.nhn?code=171539">ê·¸ë¦° ë¶</a><!-- N=a:ifo.title -->
 			
-			<!-- Æ÷½ºÅÍ -->
+			<!-- í¬ìŠ¤í„° -->
 	<div class="poster">
 		
 			
-				<a href="#" onclick="javascript:common.iwopen('171539');clickcr(this,'ifo.img','','',event);return false;"><img src="https://movie-phinf.pstatic.net/20190115_228/1547528180168jgEP7_JPEG/movie_image.jpg?type=m77_110_2" alt="±×¸° ºÏ" onerror="this.src='https://ssl.pstatic.net/static/movie/2012/06/dft_img77x110_1.png'"/><span>Æ÷½ºÅÍ Å©°Ôº¸±â</span></a>
+				<a href="#" onclick="javascript:common.iwopen('171539');clickcr(this,'ifo.img','','',event);return false;"><img src="https://movie-phinf.pstatic.net/20190115_228/1547528180168jgEP7_JPEG/movie_image.jpg?type=m77_110_2" alt="ê·¸ë¦° ë¶" onerror="this.src='https://ssl.pstatic.net/static/movie/2012/06/dft_img77x110_1.png'"/><span>í¬ìŠ¤í„° í¬ê²Œë³´ê¸°</span></a>
 			
 			<p class="info_spec">
 			
 				<span>
-				<a href="/movie/sdb/browsing/bmovie.nhn?genre=1">µå¶ó¸¶</a>
+				<a href="/movie/sdb/browsing/bmovie.nhn?genre=1">ë“œë¼ë§ˆ</a>
 				</span>
 				/
 				<span>
-					[±¹³»]<a href="/movie/sdb/browsing/bmovie.nhn?grade=1001002">12¼¼ °ü¶÷°¡</a>
-
+					[êµ­ë‚´]<a href="/movie/sdb/browsing/bmovie.nhn?grade=1001002">12ì„¸ ê´€ëŒê°€</a>
 				 * 
 				 */
 				
-				Element title=doc.selectFirst("div.mv_info h3.h_movie a"); //ÇÑ°³¸¸ °¡Á®¿È. ¸®ÅÏÇüÀÌ element tagÇÑ°³¸¸ °¡Á®¿È
+				Element title=doc.selectFirst("div.mv_info h3.h_movie a"); //í•œê°œë§Œ ê°€ì ¸ì˜´. ë¦¬í„´í˜•ì´ element tagí•œê°œë§Œ ê°€ì ¸ì˜´
 				Element poster=doc.selectFirst("div.poster a img");
 				Element genre=doc.selectFirst("dl.info_spec span a");
 				Element grade=doc.selectFirst("dl.info_spec dd");
 				Element director=doc.selectFirst("div.info_spec2 dl.step1 a");
 				Element actor=doc.selectFirst("div.info_spec2 dl.step2 a");
 				Element story=doc.selectFirst("div.video div.story_area p.con_tx");
-				//°ªÀÌ ¾øÀ½ Element like=doc.selectFirst("");
-				//vo¿¡ °ª ³Ö±â
+				//ê°’ì´ ì—†ìŒ Element like=doc.selectFirst("");
+				//voì— ê°’ ë„£ê¸°
 				MovieVO vo=new MovieVO();
-				vo.setMno(Integer.parseInt(url.substring(url.lastIndexOf("=")+1))); // 181710 °íÀ¯¹øÈ£¸¦ ÀÚ¸§
+				vo.setMno(Integer.parseInt(url.substring(url.lastIndexOf("=")+1))); // 181710 ê³ ìœ ë²ˆí˜¸ë¥¼ ìë¦„
 				
-				System.out.println("============¿µÈ­Á¤º¸============");
+				System.out.println("============ì˜í™”ì •ë³´============");
 				System.out.println("k="+k);
 				System.out.println("title: "+ title.text());
 				System.out.println("poster: " +poster.attr("src"));
@@ -115,7 +115,7 @@ public class MovieManager {
 				vo.setActor(actor.text());
 				vo.setStory(story.text());
 				//go to dao for connecting and making table with mongodb
-				dao.movieInsert(vo); //°ª Ã¤¿ì±â
+				dao.movieInsert(vo); //ê°’ ì±„ìš°ê¸°
 				k++;
 				
 				}catch(Exception ex) {}	

@@ -3,10 +3,10 @@ package com.sist.dao;
 import lombok.Getter;
 import lombok.Setter;
 
-//³×ÀÌ¹ö ¿µÈ­ Å©·Ñ¸µ
+//ë„¤ì´ë²„ ì˜í™” í¬ë¡¤ë§
 //https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&date=20200513&page=1
-//¸µÅ©¸¦ ±¸ÇØ¿À°í
-//¾ÈÀ¸·Î µé¾î°¡¼­ ¼öÁıÇÏ±â
+//ë§í¬ë¥¼ êµ¬í•´ì˜¤ê³ 
+//ì•ˆìœ¼ë¡œ ë“¤ì–´ê°€ì„œ ìˆ˜ì§‘í•˜ê¸°
 @Getter
 @Setter
 public class MovieVO {

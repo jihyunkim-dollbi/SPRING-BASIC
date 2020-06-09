@@ -37,26 +37,26 @@ public class MovieController {
 	
 	
 	@PostMapping("movie/find.do")
-	public String movie_find(Model model, String fd) //model º¸³¾°ªÀÌ ÀÖÀ»¶§,
+	public String movie_find(Model model, String fd) //model ë³´ë‚¼ê°’ì´ ìˆì„ë•Œ,
 	{
-		//dao¿¬°á for mapping fd
+		//daoì—°ê²° for mapping fd
 		List<MovieVO> list=dao.movieFindData(fd);
 		model.addAttribute("list", list);
 		
 		return "movie/find";
 	}
 		
-	//form tag¸¦ Á¦¿ÜÇÏ°í ´Â ¸ğµÎ get mapping . ajax´Â ¸í½ÃÇÑ ¹æ½ÄÀ¸·Î	
+	//form tagë¥¼ ì œì™¸í•˜ê³  ëŠ” ëª¨ë‘ get mapping . ajaxëŠ” ëª…ì‹œí•œ ë°©ì‹ìœ¼ë¡œ	
 	@GetMapping("movie/detail.do")
 	public String movie_detail(Model model, int mno)
 	{
-		//detail.do?mno= =>int mno¸¦ ¸Å°³º¯¼ö·Î
-		//DAO¿¬°á!
-		//°á°ú°ª => model(request)
+		//detail.do?mno= =>int mnoë¥¼ ë§¤ê°œë³€ìˆ˜ë¡œ
+		//DAOì—°ê²°!
+		//ê²°ê³¼ê°’ => model(request)
 		MovieVO vo=dao.movieDetailData(mno);
 		model.addAttribute("vo", vo);
 		
-		return "movie/detail"; //modelÀ» »ç¿ëÇÑ´Ù´Â °ÍÀº º¸³¾ °ªÀÌ ÀÖ´Ù´Â °ÍÀÌ°í ==> forward!
+		return "movie/detail"; //modelì„ ì‚¬ìš©í•œë‹¤ëŠ” ê²ƒì€ ë³´ë‚¼ ê°’ì´ ìˆë‹¤ëŠ” ê²ƒì´ê³  ==> forward!
  	}
 
 

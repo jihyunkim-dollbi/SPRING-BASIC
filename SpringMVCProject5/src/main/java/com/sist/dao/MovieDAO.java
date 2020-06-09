@@ -9,6 +9,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+import com.sist.manager.NewsVO;
 import com.sist.mongo.*;
 
 @Repository
@@ -22,16 +23,16 @@ public class MovieDAO {
 	public MovieDAO()
 	{
 		try{
-			//ÇÑ¹ø¸¸ ¿¬°áÇÏ¸éok
+			//í•œë²ˆë§Œ ì—°ê²°í•˜ë©´ok
 			mc=new MongoClient("localhost",27017);
 			db=mc.getDB("mydb");
-			dbc=db.getCollection("movie"); //making table name here
+			dbc=db.getCollection("news"); //making table name here
 			
 			
 		}catch(Exception ex){}
 	}
 	
-	//{mno: 100, title:'',...} like json shape ==> BasicDBObject(ÇÏ³ª¸¸ »ı¼ºÇÏ¸é ÇÏ³ª¾¿ ³ÖÀ» ¼öÀÖ´Ù.)
+	//{mno: 100, title:'',...} like json shape ==> BasicDBObject(í•˜ë‚˜ë§Œ ìƒì„±í•˜ë©´ í•˜ë‚˜ì”© ë„£ì„ ìˆ˜ìˆë‹¤.)
 	public void movieInsert(MovieVO vo)
 	{
 		try{
@@ -45,13 +46,28 @@ public class MovieDAO {
 			obj.put("actor", vo.getActor());
 			obj.put("story", vo.getStory());
 			dbc.insert(obj);
-			//Å×ÀÌºí¸¸µé±â!! => go to manager
-			//jsonÇü½Ä, Äõ¸®¹®Àåx
+			//í…Œì´ë¸”ë§Œë“¤ê¸°!! => go to manager
+			//jsoní˜•ì‹, ì¿¼ë¦¬ë¬¸ì¥x
 			
 		}catch(Exception ex) {}
 		
 	}
 	
+	
+	public void newsInsert(NewsVO svo)
+	{
+		try{
+			
+			BasicDBObject sobj=new BasicDBObject();
+			sobj.put("title", svo.getTitle());
+			sobj.put("poster", svo.getPoster());
+			sobj.put("content", svo.getContent());
+			sobj.put("link", svo.getLink());
+			sobj.put("author", svo.getAuthor());
+			dbc.insert(sobj);
+			
+		}catch(Exception ex) {}
+	}
 	
 	public List<MovieVO> movieListData(int page){
 		
@@ -59,20 +75,20 @@ public class MovieDAO {
 		try{
 			
 			int rowSize=12;
-			//1ÆäÀÌÁö 0, 2ÆäÀÌÁö ¾Õ¿¡ 12°³¸¦ ¹ö¸°´Ù , 3ÆäÀÌÁö ¾Õ¿¡ 24°³ ¹ö¸²
-			//skip=¹ö¸®´Â °³¼ö
+			//1í˜ì´ì§€ 0, 2í˜ì´ì§€ ì•ì— 12ê°œë¥¼ ë²„ë¦°ë‹¤ , 3í˜ì´ì§€ ì•ì— 24ê°œ ë²„ë¦¼
+			//skip=ë²„ë¦¬ëŠ” ê°œìˆ˜
 			int skip=(rowSize*page)-rowSize;
 		
-			//resultset  and find()=> select * from and skip¸¸Å­ ¹ö·Á and rowSize¸¸Å­ °¡Á®¿Í¶ó.
-			//limit¹ö¸®°í ¹ö¸°°³¼ö¸¸Å­ ´Ù½Ã °¡Á®¿È
+			//resultset  and find()=> select * from and skipë§Œí¼ ë²„ë ¤ and rowSizeë§Œí¼ ê°€ì ¸ì™€ë¼.
+			//limitë²„ë¦¬ê³  ë²„ë¦°ê°œìˆ˜ë§Œí¼ ë‹¤ì‹œ ê°€ì ¸ì˜´
 			DBCursor cursor=dbc.find().skip(skip).limit(rowSize);
 			while(cursor.hasNext()){
-				// ÇÑ¹ÙÄû¸¶´Ù ºí·Ï´ÜÀ§(jsonÇÑ°³)·Î °¡Á®¿È
-				//rowÇÑ°³ °¡Á®¿À±â
+				// í•œë°”í€´ë§ˆë‹¤ ë¸”ë¡ë‹¨ìœ„(jsoní•œê°œ)ë¡œ ê°€ì ¸ì˜´
+				//rowí•œê°œ ê°€ì ¸ì˜¤ê¸°
 				BasicDBObject obj=(BasicDBObject)cursor.next();
 				MovieVO vo=new MovieVO();
-				//¸ù°íµğºñÀÇ ´ÜÁ¡ => ÄÃ·³ÁöÁ¤ÇÒ¼ö¾ø´Ù.				
-				vo.setMno(obj.getInt("mno"));//mno¶ó´Â Å° °ªÀ» Áà
+				//ëª½ê³ ë””ë¹„ì˜ ë‹¨ì  => ì»¬ëŸ¼ì§€ì •í• ìˆ˜ì—†ë‹¤.				
+				vo.setMno(obj.getInt("mno"));//mnoë¼ëŠ” í‚¤ ê°’ì„ ì¤˜
 				vo.setTitle(obj.getString("title"));
 				vo.setPoster(obj.getString("poster"));
 				list.add(vo);
@@ -83,7 +99,7 @@ public class MovieDAO {
 	}
 	
 	/*
-	 * NoSQL => SQLÀÌ Á¸ÀçÇÏÁö ¾Ê°í, ÇÔ¼ö¸¦ ÀÌ¿ëÇØ¼­ Ã³¸®
+	 * NoSQL => SQLì´ ì¡´ì¬í•˜ì§€ ì•Šê³ , í•¨ìˆ˜ë¥¼ ì´ìš©í•´ì„œ ì²˜ë¦¬
 	 */
 	public int movieTotalPage()
 	{
@@ -91,44 +107,44 @@ public class MovieDAO {
 		int total=0;
 		try{
 			//SELECT CEIL(COUNT(*)/12.0) FROM movie
-			int count=(int)dbc.count(); // dbc.count(); ÃÑ°³¼ö ,(int)Çüº¯È¯ ÀÌÀ¯´Â ÃÑ°³¼ö°¡ longÇüÀ¸·Î µé¾î¿À±â ¶§¹®.
+			int count=(int)dbc.count(); // dbc.count(); ì´ê°œìˆ˜ ,(int)í˜•ë³€í™˜ ì´ìœ ëŠ” ì´ê°œìˆ˜ê°€ longí˜•ìœ¼ë¡œ ë“¤ì–´ì˜¤ê¸° ë•Œë¬¸.
 			// SELECT COUNT(*) FROM movie
-			total=(int)(Math.ceil(count/12.0)); //ÇÔ¼ö·Î ÃÑ°è¼ö ±¸ÇÏ°í ÀÚ¹Ù¿¡¼­ »ç¿ëÇÏ´Â ¿Ã¸²¸Ş¼Òµå »ç¿ë1
+			total=(int)(Math.ceil(count/12.0)); //í•¨ìˆ˜ë¡œ ì´ê³„ìˆ˜ êµ¬í•˜ê³  ìë°”ì—ì„œ ì‚¬ìš©í•˜ëŠ” ì˜¬ë¦¼ë©”ì†Œë“œ ì‚¬ìš©1
 			
 		}catch(Exception ex){}
 		return total;
 	}
 	
-	//mongodb´Â Áö´ÉÇü À¥À» ¸¸µé±â À§ÇØ - ¿À¶óÅ¬Àº Á¤ÇüÈ­µÈ µ¥ÀÌÅÍ¸¸ ´Ù·ë,
-	//json => r => Á¤ÇüÈ­ÇÏ¿© °¡Á®¿È
-	//but twitter =>ºñÁ¤ÇüÈ­ µ¥ÀÌÅÍ =>mongodb´Â ±×´ë·Î ´Ù ÀúÀåÇØÁÜ! => °¡Á®¿Í¼­ Á¤ÇüÈ­ÇÏ°í ¿À¶óÅ¬¿¡ ÀúÀåÇÔ!!
-	//µû¶ó¼­ ¸ù°íµğºñ´Â ÀÓ½ÃÀúÀå¼Ò·Î ¸¹ÀÌ ¾²ÀÓ=> Á¶ ´ÜÀ§¸¦ ³Ñ¾î ÀúÀå°¡´É=> ¼Óµµ ºü¸§! than oracle!
-	//mongoDB´Â MAPPERX => so Ã³¸®¸¦ dao¿¡¼­
+	//mongodbëŠ” ì§€ëŠ¥í˜• ì›¹ì„ ë§Œë“¤ê¸° ìœ„í•´ - ì˜¤ë¼í´ì€ ì •í˜•í™”ëœ ë°ì´í„°ë§Œ ë‹¤ë£¸,
+	//json => r => ì •í˜•í™”í•˜ì—¬ ê°€ì ¸ì˜´
+	//but twitter =>ë¹„ì •í˜•í™” ë°ì´í„° =>mongodbëŠ” ê·¸ëŒ€ë¡œ ë‹¤ ì €ì¥í•´ì¤Œ! => ê°€ì ¸ì™€ì„œ ì •í˜•í™”í•˜ê³  ì˜¤ë¼í´ì— ì €ì¥í•¨!!
+	//ë”°ë¼ì„œ ëª½ê³ ë””ë¹„ëŠ” ì„ì‹œì €ì¥ì†Œë¡œ ë§ì´ ì“°ì„=> ì¡° ë‹¨ìœ„ë¥¼ ë„˜ì–´ ì €ì¥ê°€ëŠ¥=> ì†ë„ ë¹ ë¦„! than oracle!
+	//mongoDBëŠ” MAPPERX => so ì²˜ë¦¬ë¥¼ daoì—ì„œ
 	
 	public List<MovieVO> movieFindData(String fd){
 		
 		//select * from movie where title like '%fd%'
-		//find({"title",{"$regex","*."+fd}}) ==> Á¤±Ô½ÄÀ» ÀÌ¿ëÇØ¼­ Ã£´Â´Ù!!
+		//find({"title",{"$regex","*."+fd}}) ==> ì •ê·œì‹ì„ ì´ìš©í•´ì„œ ì°¾ëŠ”ë‹¤!!
 		
-		//insert/delete/Ã£±â!from mongodb!
-		//but mongoDB¿¡µµ MYBATIS»ç¿ëÇÒ ¼öÀÖ´Ù. SPRING-MONGODB
+		//insert/delete/ì°¾ê¸°!from mongodb!
+		//but mongoDBì—ë„ MYBATISì‚¬ìš©í•  ìˆ˜ìˆë‹¤. SPRING-MONGODB
 		//find({no:1})
 		List<MovieVO> list=new ArrayList<MovieVO>();
 		try
-		{	//{no:1} => BasicDBObject°¡ Ã£¾ÆÁØ´Ù no¸¦ ÁÖ°í 1À» °¡Á®¿È
+		{	//{no:1} => BasicDBObjectê°€ ì°¾ì•„ì¤€ë‹¤ noë¥¼ ì£¼ê³  1ì„ ê°€ì ¸ì˜´
 			
-			//{"title",{"$regex","*."+fd}} ÇÑ°³ÀÇ {}ÀÌ ÇÑ°³ÀÇ BasicDBObject => ¾È¿¡ ÇÑ°³ ´õ ÀÖ´Â ¸ğ¾ç
+			//{"title",{"$regex","*."+fd}} í•œê°œì˜ {}ì´ í•œê°œì˜ BasicDBObject => ì•ˆì— í•œê°œ ë” ìˆëŠ” ëª¨ì–‘
 			BasicDBObject where =
-					new BasicDBObject("title",new BasicDBObject("$regex",".*"+fd)); // $regex·Î Ã£°Ú´Ù/ => fd°¡ Æ÷ÇÔµÈ ¹®ÀåÀ» Ã£°Ú´Ù.
-			//À§¹®ÀåÀ» ½ÇÇàÇÑ °á°ú¸¦ resultsetÀ¸·Î °¡Á®¿È => record´ÜÀ§·Î °¡Á®¿È
-			DBCursor cursor=dbc.find(where);//whereÁ¶°Ç¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ dbc¿¡¼­  ¸ğµÎ Ã£¾ÆÁà find()=select()// find()¾È¿¡ ¾øÀ¸¸é * ¸ğµÎÀÇ ÀÇ¹Ì
+					new BasicDBObject("title",new BasicDBObject("$regex",".*"+fd)); // $regexë¡œ ì°¾ê² ë‹¤/ => fdê°€ í¬í•¨ëœ ë¬¸ì¥ì„ ì°¾ê² ë‹¤.
+			//ìœ„ë¬¸ì¥ì„ ì‹¤í–‰í•œ ê²°ê³¼ë¥¼ resultsetìœ¼ë¡œ ê°€ì ¸ì˜´ => recordë‹¨ìœ„ë¡œ ê°€ì ¸ì˜´
+			DBCursor cursor=dbc.find(where);//whereì¡°ê±´ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë¥¼ dbcì—ì„œ  ëª¨ë‘ ì°¾ì•„ì¤˜ find()=select()// find()ì•ˆì— ì—†ìœ¼ë©´ * ëª¨ë‘ì˜ ì˜ë¯¸
 			while(cursor.hasNext())
 			{
-				//ºí·°ÀüÃ¼¸¦ ´Ù °¡Á®¿À±â¶§¹®¿¡ ¿ì¸®´Â 2°³¸¸ ÇÊ¿äÇÔ.. Æ÷½ºÅÍ¶û Á¦¸ñ¸¸ ÇÊ¿äÇÔ!(Ãâ·ÂµÇ´Â ºÎºĞ!)
-				BasicDBObject obj=(BasicDBObject)cursor.next(); //ÇÑ°³¾¿ ÀĞ±â ºí·°À»  {} , == rs.next()
+				//ë¸”ëŸ­ì „ì²´ë¥¼ ë‹¤ ê°€ì ¸ì˜¤ê¸°ë•Œë¬¸ì— ìš°ë¦¬ëŠ” 2ê°œë§Œ í•„ìš”í•¨.. í¬ìŠ¤í„°ë‘ ì œëª©ë§Œ í•„ìš”í•¨!(ì¶œë ¥ë˜ëŠ” ë¶€ë¶„!)
+				BasicDBObject obj=(BasicDBObject)cursor.next(); //í•œê°œì”© ì½ê¸° ë¸”ëŸ­ì„  {} , == rs.next()
 				//go to robo3t
 				MovieVO vo=new MovieVO();
-				//ÇÊ¿äÇÑ µ¥ÀÌÅÍ vo¿¡ ³Ö¾î list·Î °¡Á®¿À±â
+				//í•„ìš”í•œ ë°ì´í„° voì— ë„£ì–´ listë¡œ ê°€ì ¸ì˜¤ê¸°
 				vo.setMno(obj.getInt("mno")); 
 				vo.setTitle(obj.getString("title"));
 				vo.setPoster(obj.getString("poster"));
@@ -136,14 +152,14 @@ public class MovieDAO {
 			}
 			cursor.close();
 			
-			//where.put("title", fd); //where.put("title", fd);  => where title=fd so, °Ë»ö¿¡¼­´Â »ç¿ëx
-			//title¿¡¼­ Ã£°Ú´Ù!
+			//where.put("title", fd); //where.put("title", fd);  => where title=fd so, ê²€ìƒ‰ì—ì„œëŠ” ì‚¬ìš©x
+			//titleì—ì„œ ì°¾ê² ë‹¤!
 		}catch(Exception ex){}
 		return list;
 	}
 	
 	
-	//¸ù°íµğºñ => select , delete, insert ==> (ÀÓ½ÃÀúÀå!)
+	//ëª½ê³ ë””ë¹„ => select , delete, insert ==> (ì„ì‹œì €ì¥!)
 	public MovieVO movieDetailData(int mno)
 	{
 		MovieVO vo=new MovieVO();
@@ -151,10 +167,10 @@ public class MovieDAO {
 			
 			BasicDBObject where
 				=new BasicDBObject("mno",mno); //mno=10
-			BasicDBObject res=(BasicDBObject)dbc.findOne(where); //ÇÑ°³ °¡Á®¿Ã¶§
-			//ÇÑ°³Ã£±â¶§¹®¿¡ cursor·Î whileÇÊ¿ä!
+			BasicDBObject res=(BasicDBObject)dbc.findOne(where); //í•œê°œ ê°€ì ¸ì˜¬ë•Œ
+			//í•œê°œì°¾ê¸°ë•Œë¬¸ì— cursorë¡œ whileí•„ìš”!
 			vo.setMno(res.getInt("mno"));
-			vo.setTitle(res.getString("title")); // "title"ÀÌ ¸ù°íµğºñ¿¡¼­ÀÇ key
+			vo.setTitle(res.getString("title")); // "title"ì´ ëª½ê³ ë””ë¹„ì—ì„œì˜ key
 			vo.setActor(res.getString("actor"));
 			vo.setDirector(res.getString("director"));
 			vo.setPoster(res.getString("poster"));
