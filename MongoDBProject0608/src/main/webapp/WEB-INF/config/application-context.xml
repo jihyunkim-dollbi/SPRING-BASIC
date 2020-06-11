@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd">
+
+	<!-- 1. AOP 설정 <aop: auto..
+	 	2. 사용자 정의 클래스 등록 <context:componen....
+	 	3. DATASOURCE 
+		4. TRANSACTION 등록 
+		5. MYBATIS 관련 등록
+		6. MONGO, WEBSOCKET 등록
+		7. 스케쥴러 등록
+		8. 인터셉터 등록
+		9. ViewResolver 
+	 -->
+	<context:component-scan base-package="com.sist.*"/>
+	
+	<mvc:annotation-driven> 
+			<mvc:message-converters>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"> 
+					<property name="supportedMediaTypes"> 
+						<list> 
+							<value>text/html;charset=UTF-8</value> 
+						</list> 
+					</property> 
+				</bean> 
+			</mvc:message-converters>
+		</mvc:annotation-driven>
+	
+	<mongo:mongo-client
+		id="mc"
+		host="127.0.0.1"
+		port="27017"
+	/>
+	<!-- 생성자필요
+		class MongoTemplate(mongoclient mc, String databaseName)
+		생성자로 가져와서 매개변수로 넣어줄 것임.
+	 -->
+	<bean id="MongoTemplate"
+		  class="org.springframework.data.mongodb.core.MongoTemplate">
+		  <constructor-arg ref="mc"/>
+		  <constructor-arg name="databaseName" value="mydb"/>
+		  </bean>
+		  
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		  p:prefix="/"
+		  p:suffix=".jsp"
+	/>
+</beans>
